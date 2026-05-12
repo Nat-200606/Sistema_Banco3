@@ -40,8 +40,8 @@ public class FrameCriar extends FrameBase implements ActionListener {
             String textSaldo = "";
 
             try {
-                reader =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\data.txt"));
-                readerSaldo =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\saldo.txt"));
+                reader =  new BufferedReader(new FileReader("data.txt"));
+                readerSaldo =  new BufferedReader(new FileReader("saldo.txt"));
 
                 try {
                     String rewrite  = reader.readLine();

@@ -49,7 +49,7 @@ public class FrameConta extends FrameBase implements ActionListener {
             String text = "";
 
             try {
-                readerSaldo =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\saldo.txt"));
+                readerSaldo =  new BufferedReader(new FileReader("saldo.txt"));
 
                 try {
                     String rewriteSaldo = readerSaldo.readLine();
@@ -102,7 +102,7 @@ public class FrameConta extends FrameBase implements ActionListener {
                 String text = "";
 
                 try {
-                    readerSaldo =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\saldo.txt"));
+                    readerSaldo =  new BufferedReader(new FileReader("saldo.txt"));
 
                     try {
                         String rewriteSaldo = readerSaldo.readLine();

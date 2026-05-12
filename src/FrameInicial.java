@@ -44,8 +44,8 @@ public class FrameInicial extends FrameBase implements ActionListener {
             String numero = entrarconta.getText();
 
             try {
-                reader =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\data.txt"));
-                readerSaldo =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\saldo.txt"));
+                reader =  new BufferedReader(new FileReader("data.txt"));
+                readerSaldo =  new BufferedReader(new FileReader("saldo.txt"));
 
                 String line;
                 String lineSaldo;
