@@ -7,6 +7,7 @@ import java.io.*;
 public class FrameConta extends FrameBase implements ActionListener {
     ButtonBase depositar;
     ButtonBase sacar;
+    ButtonBase voltar;
     JLabel saldo;
     BufferedReader readerSaldo;
     static FileWriter saldoWriter;
@@ -14,6 +15,10 @@ public class FrameConta extends FrameBase implements ActionListener {
     FrameConta(){
         this.setSize(600,560);
 
+        voltar = new ButtonBase("Voltar");
+        voltar.setLocation(160,350);
+        voltar.setFont(fonte);
+        voltar.addActionListener(this);
 
         saldo = new JLabel("Saldo da conta "+Main.conta+" e de "+Main.saldo);
         saldo.setBounds(160,50,300,50);
@@ -35,6 +40,7 @@ public class FrameConta extends FrameBase implements ActionListener {
         this.add(saldo);
         this.add(depositar);
         this.add(sacar);
+        this.add(voltar);
         this.setVisible(true);
     }
 
@@ -147,6 +153,9 @@ public class FrameConta extends FrameBase implements ActionListener {
             }else {
                 JOptionPane.showMessageDialog(null,"Saldo insuficiente");
             }
+        }
+        if (e.getSource() == voltar){
+            this.dispose();
         }
 
     }

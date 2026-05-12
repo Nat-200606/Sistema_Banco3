@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,6 +24,7 @@ public class FrameInicial extends FrameBase implements ActionListener {
         entrar.setFont(fonte);
         entrar.addActionListener(this);
         entrar.setLocation(160,120);
+        entrar.setMnemonic(KeyEvent.VK_ENTER);
 
         criar = new ButtonBase("criar uma conta");
         criar.setFont(fonte);
