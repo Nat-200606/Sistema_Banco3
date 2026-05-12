@@ -2,16 +2,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 public class FrameConta extends FrameBase implements ActionListener {
     ButtonBase depositar;
     ButtonBase sacar;
     JLabel saldo;
+    BufferedReader readerSaldo;
+    static FileWriter saldoWriter;
 
     FrameConta(){
         this.setSize(600,560);
 
-        saldo = new JLabel("Saldo da conta "+Main.contas[Main.posAtual]+" e de "+Main.saldo[Main.posAtual]);
+
+        saldo = new JLabel("Saldo da conta "+Main.conta+" e de "+Main.saldo);
         saldo.setBounds(160,50,300,50);
         saldo.setFont(fonte);
         saldo.setForeground(Color.decode("#61A966"));
@@ -37,17 +41,109 @@ public class FrameConta extends FrameBase implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==depositar){
-            Main.saldo[Main.posAtual] +=
+            Main.saldo +=
                     Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade que deseja depositar"));
             JOptionPane.showMessageDialog(null,"Deposito realizado com sucesso");
-            saldo.setText("Saldo da conta "+Main.contas[Main.posAtual]+" e de "+Main.saldo[Main.posAtual]);
+            saldo.setText("Saldo da conta "+Main.conta+" e de "+Main.saldo);
+
+            String text = "";
+
+            try {
+                readerSaldo =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\saldo.txt"));
+
+                try {
+                    String rewriteSaldo = readerSaldo.readLine();
+                    int x = 1;
+                    System.out.println(rewriteSaldo);
+
+                    while (rewriteSaldo != null){
+                        if (x == Main.pos){
+                            text = text + Main.saldo+"\n";
+                            System.out.println(rewriteSaldo);
+                            rewriteSaldo = readerSaldo.readLine();
+                        }else{
+                            text = text + rewriteSaldo + "\n";
+                            rewriteSaldo = readerSaldo.readLine();
+                            System.out.println(rewriteSaldo);
+                        }
+                        x++;
+                    }
+
+                    readerSaldo.close();
+
+                } catch (IOException ex) {
+                    System.out.println("something went wrong");
+                    throw new RuntimeException(ex);
+                }
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            try {
+                saldoWriter = new FileWriter("saldo.txt");
+
+                System.out.println("escrevendo");
+                saldoWriter.write(text);
+                saldoWriter.close();
+            }
+            catch (IOException ex){
+                System.out.println("something went wrong");
+                throw new RuntimeException(ex);
+            }
+
         }
         if (e.getSource()==sacar){
             int saque = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade que deseja sacar"));
-            if ((Main.saldo[Main.posAtual]-saque) >= 0) {
-                Main.saldo[Main.posAtual] -=saque;
+            if ((Main.saldo-saque) >= 0) {
+                Main.saldo -=saque;
                 JOptionPane.showMessageDialog(null, "Saque realizado com sucesso");
-                saldo.setText("Saldo da conta " + Main.contas[Main.posAtual] + " e de " + Main.saldo[Main.posAtual]);
+                saldo.setText("Saldo da conta " + Main.conta + " e de " + Main.saldo);
+
+                String text = "";
+
+                try {
+                    readerSaldo =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\saldo.txt"));
+
+                    try {
+                        String rewriteSaldo = readerSaldo.readLine();
+                        int x = 1;
+                        System.out.println(rewriteSaldo);
+
+                        while (rewriteSaldo != null){
+                            if (x == Main.pos){
+                                text = text + Main.saldo+"\n";
+                                System.out.println(rewriteSaldo);
+                                rewriteSaldo = readerSaldo.readLine();
+                            }else{
+                                text = text + rewriteSaldo + "\n";
+                                rewriteSaldo = readerSaldo.readLine();
+                                System.out.println(rewriteSaldo);
+                            }
+                            x++;
+                        }
+
+                        readerSaldo.close();
+
+                    } catch (IOException ex) {
+                        System.out.println("something went wrong");
+                        throw new RuntimeException(ex);
+                    }
+                } catch (FileNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                try {
+                    saldoWriter = new FileWriter("saldo.txt");
+
+                    System.out.println("escrevendo");
+                    saldoWriter.write(text);
+                    saldoWriter.close();
+                }
+                catch (IOException ex){
+                    System.out.println("something went wrong");
+                    throw new RuntimeException(ex);
+                }
+
             }else {
                 JOptionPane.showMessageDialog(null,"Saldo insuficiente");
             }

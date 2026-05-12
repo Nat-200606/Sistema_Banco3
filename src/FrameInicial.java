@@ -1,11 +1,18 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class FrameInicial extends FrameBase implements ActionListener {
     static ButtonBase entrar;
     static JTextField entrarconta;
     static ButtonBase criar;
+    static BufferedReader reader;
+    static BufferedReader readerSaldo;
+
     FrameInicial() {
         entrarconta = new JTextField();
         entrarconta.setFont(fonte);
@@ -34,20 +41,42 @@ public class FrameInicial extends FrameBase implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==entrar){
-            int numero = Integer.parseInt(entrarconta.getText());
-            for (int y = 0 ; y < 10; y++){
-                if (Main.contas[y] == numero){
-                    Main.posAtual = y;
-                    FrameConta conta = new FrameConta();
-                    break;
-                }else if (y >= 9){
-                    JOptionPane.showMessageDialog(null,"Erro:Conta nao encontrada");
+            String numero = entrarconta.getText();
+
+            try {
+                reader =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\data.txt"));
+                readerSaldo =  new BufferedReader(new FileReader("C:\\Users\\natal\\Downloads\\Projetos\\Java\\Sistema_Banco3\\saldo.txt"));
+
+                String line;
+                String lineSaldo;
+                Main.pos = 1;
+                while ((line = reader.readLine()) != null){
+                    lineSaldo = readerSaldo.readLine();
+                    if (line.equals(numero)){
+                        Main.conta = Integer.parseInt(line);
+                        Main.saldo = Integer.parseInt(lineSaldo);
+                        FrameConta conta = new FrameConta();
+                        break;
+                    }
+                    Main.pos++;
                 }
+                if (Main.conta == 0){
+                    JOptionPane.showMessageDialog(null,"Erro:Conta nao encontrada");
+                    Main.pos = 1;
+                }
+
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
             }
+
         }
 
         if (e.getSource()==criar){
-            FrameCriar frameCriar = new FrameCriar();
+            try {
+                FrameCriar frameCriar = new FrameCriar();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 }
